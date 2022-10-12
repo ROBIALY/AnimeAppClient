@@ -1,4 +1,4 @@
-package edu.robertconstantin.animeappcliient
+package edu.robertconstantin.animeappcliient.core
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -10,7 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import edu.robertconstantin.animeappcliient.ui.theme.AnimeAppCliientTheme
+import edu.robertconstantin.animeappcliient.core.ui.theme.AnimeAppCliientTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

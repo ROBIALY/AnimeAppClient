@@ -1,4 +1,4 @@
-package edu.robertconstantin.animeappcliient.ui.theme
+package edu.robertconstantin.animeappcliient.core.ui.theme
 
 import android.app.Activity
 import android.os.Build
