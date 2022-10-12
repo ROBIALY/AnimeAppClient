@@ -55,8 +55,6 @@ fun BottomNavMenu(
             BottomNavigationItem(
                 //estara selecionado cuando la ruta actual que hay en la pila sea igual a la del propio elemento.
                 selected = currentRoute == bottomMenuItem.route,
-                selectedContentColor = selectedColor,
-                unselectedContentColor = unselectedColor,
                 //llamamos a la lambda para hacer la navegacion y pasamos la ruta para dirigirnos a ella
                 //en el lugar de la implementacion de esta lambda.
                 onClick = { onBottomIconClick(bottomMenuItem.route) },
@@ -70,7 +68,11 @@ fun BottomNavMenu(
                 alwaysShowLabel = false,
                 icon = {
                     bottomMenuItem.icon?.let {
-                        Icon(imageVector = bottomMenuItem.icon, contentDescription = bottomMenuItem.title)
+                        Icon(
+                            tint = if (currentRoute == bottomMenuItem.route) selectedColor else unselectedColor,
+                            imageVector = bottomMenuItem.icon,
+                            contentDescription = bottomMenuItem.title
+                        )
                     }
                 }
             )
