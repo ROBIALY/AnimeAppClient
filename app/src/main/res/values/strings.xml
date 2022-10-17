@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">AnimeAppCliient</string>
+    <string name="error_unknown">Unknown Error!</string>
 </resources>
