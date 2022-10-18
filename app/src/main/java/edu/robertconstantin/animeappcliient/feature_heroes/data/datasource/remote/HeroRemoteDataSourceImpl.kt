@@ -3,8 +3,9 @@ package edu.robertconstantin.animeappcliient.feature_heroes.data.datasource.remo
 import edu.robertconstantin.animeappcliient.core.util.Resource
 import edu.robertconstantin.animeappcliient.core.util.callApi
 import edu.robertconstantin.animeappcliient.feature_heroes.data.dto.HeroDto
+import javax.inject.Inject
 
-class HeroRemoteDataSourceImpl(private val heroApi: HeroApi) : IHeroRemoteDataSource {
+class HeroRemoteDataSourceImpl @Inject constructor(private val heroApi: HeroApi) : IHeroRemoteDataSource {
     override suspend fun getAllHeroes(): Resource<List<HeroDto>> {
         return callApi { heroApi.getAllHeroes() }
     }

@@ -9,6 +9,7 @@ import edu.robertconstantin.animeappcliient.feature_heroes.data.datasource.remot
 import edu.robertconstantin.animeappcliient.feature_heroes.data.datasource.remote.HeroRemoteDataSourceImpl
 import edu.robertconstantin.animeappcliient.feature_heroes.data.datasource.remote.IHeroRemoteDataSource
 import edu.robertconstantin.animeappcliient.feature_heroes.data.repository.HeroRepositoryImpl
+import edu.robertconstantin.animeappcliient.feature_heroes.domain.GetAllHeroesUseCase
 import edu.robertconstantin.animeappcliient.feature_heroes.domain.repository.IHeroRepository
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -30,12 +31,22 @@ object HeroModule {
             .create(HeroApi::class.java)
     }
 
+    @Provides
+    @Singleton
     fun provideHeroRemoteDataSource(api: HeroApi): IHeroRemoteDataSource {
         return HeroRemoteDataSourceImpl(api)
     }
 
+    @Provides
+    @Singleton
     fun provideRepository(remote: IHeroRemoteDataSource): IHeroRepository {
         return HeroRepositoryImpl(remote)
+    }
+
+    @Provides
+    @Singleton
+    fun provideUseCase(repository: IHeroRepository): GetAllHeroesUseCase {
+        return GetAllHeroesUseCase(repository)
     }
 
 }
