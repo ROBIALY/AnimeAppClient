@@ -15,18 +15,26 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import coil.ImageLoader
+import dagger.hilt.android.AndroidEntryPoint
 import edu.robertconstantin.animeappcliient.core.presentation.navigation.BottomNavMenu
 import edu.robertconstantin.animeappcliient.core.presentation.navigation.screen.BottomMenuScreen
 import edu.robertconstantin.animeappcliient.core.ui.theme.AnimeAppCliientTheme
 import edu.robertconstantin.animeappcliient.feature_heroes.presentation.hero_create_screen.HeroCreateScreen
 import edu.robertconstantin.animeappcliient.feature_heroes.presentation.hero_favorites_screen.HeroFavoritesScreen
 import edu.robertconstantin.animeappcliient.feature_heroes.presentation.hero_feed_screen.HeroFeedScreen
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    @Inject
+    lateinit var imageLoader: ImageLoader
+
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,24 +75,24 @@ class MainActivity : ComponentActivity() {
                             )
 
                         }
-                    ) { paddingValues ->
-                        Column(modifier = Modifier
-                            .fillMaxSize()
-                            .padding(bottom = paddingValues.calculateBottomPadding())
-                            .verticalScroll(rememberScrollState())) {
-
-//                            Text("Bottom app bar padding:  $paddingValues")
+                    ) {
+//                        Column(modifier = Modifier
+//                            .fillMaxSize()
+//                            .padding(bottom = 50.dp)
+//                            .verticalScroll(rememberScrollState())) {
 //
-//                            repeat(50) {
-//                                Text(it.toString())
-//                            }
-                        }
+////                            Text("Bottom app bar padding:  $paddingValues")
+////
+////                            repeat(50) {
+////                                Text(it.toString())
+////                            }
+//                        }
                         NavHost(
                             navController = navController,
                             startDestination = BottomMenuScreen.HeroFeedScreen.route) {
 
                             composable(route = BottomMenuScreen.HeroFeedScreen.route) {
-                                HeroFeedScreen()
+                                HeroFeedScreen(imageLoader = imageLoader)
                             }
 
                             composable(route = BottomMenuScreen.HeroFavoritesScreen.route) {
@@ -100,18 +108,5 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    AnimeAppCliientTheme {
-        Greeting("Android")
     }
 }

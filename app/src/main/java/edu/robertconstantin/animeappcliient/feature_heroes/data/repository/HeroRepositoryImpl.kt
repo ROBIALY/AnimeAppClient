@@ -6,8 +6,9 @@ import edu.robertconstantin.animeappcliient.feature_heroes.data.datasource.remot
 import edu.robertconstantin.animeappcliient.feature_heroes.data.mapper.toHeroDM
 import edu.robertconstantin.animeappcliient.feature_heroes.domain.model.HeroDM
 import edu.robertconstantin.animeappcliient.feature_heroes.domain.repository.IHeroRepository
+import javax.inject.Inject
 
-class HeroRepositoryImpl(private val remoteHeroDataSource: IHeroRemoteDataSource): IHeroRepository {
+class HeroRepositoryImpl @Inject constructor(private val remoteHeroDataSource: IHeroRemoteDataSource): IHeroRepository {
 
     override suspend fun getAllHeroes(): Resource<List<HeroDM>> {
         return remoteHeroDataSource.getAllHeroes().mapResourceData(

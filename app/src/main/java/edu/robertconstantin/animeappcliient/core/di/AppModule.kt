@@ -1,5 +1,9 @@
 package edu.robertconstantin.animeappcliient.core.di
 
+import android.app.Application
+import coil.ComponentRegistry
+import coil.ImageLoader
+import coil.decode.SvgDecoder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,5 +24,16 @@ object AppModule {
                     level = HttpLoggingInterceptor.Level.BODY
                 }
             ).build()
+    }
+
+    //ImageLoader
+    @Provides
+    @Singleton
+    fun provideImageLoader(app: Application): ImageLoader {
+        return ImageLoader.Builder(app)
+            .crossfade(true)
+            .components(fun ComponentRegistry.Builder.() {
+                add(SvgDecoder.Factory())
+            }).build()
     }
 }
