@@ -15,6 +15,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -74,18 +75,18 @@ class MainActivity : ComponentActivity() {
                             )
 
                         }
-                    ) { paddingValues ->
-                        Column(modifier = Modifier
-                            .fillMaxSize()
-                            .padding(bottom = paddingValues.calculateBottomPadding())
-                            .verticalScroll(rememberScrollState())) {
-
-//                            Text("Bottom app bar padding:  $paddingValues")
+                    ) {
+//                        Column(modifier = Modifier
+//                            .fillMaxSize()
+//                            .padding(bottom = 50.dp)
+//                            .verticalScroll(rememberScrollState())) {
 //
-//                            repeat(50) {
-//                                Text(it.toString())
-//                            }
-                        }
+////                            Text("Bottom app bar padding:  $paddingValues")
+////
+////                            repeat(50) {
+////                                Text(it.toString())
+////                            }
+//                        }
                         NavHost(
                             navController = navController,
                             startDestination = BottomMenuScreen.HeroFeedScreen.route) {
