@@ -12,8 +12,5 @@ data class HeroDM(
     val power: Int,
     //month of born
     val month: String,
-    val day: String,
-    val family: List<String>,
-    val abilities: List<String>,
-    val natureTypes: List<String>
+    val day: String
 )

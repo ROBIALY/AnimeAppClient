@@ -31,7 +31,7 @@ import edu.robertconstantin.animeappcliient.feature_heroes.presentation.util.Pre
 fun HeroItem(
     imageLoader: ImageLoader,
     hero: HeroVO,
-    onHeroItemClick: (heroItem: HeroVO) -> Unit
+    onHeroItemClick: (heroItem: HeroVO) -> Unit = {}
 ) {
 
     val dimens = LocalSpacing.current

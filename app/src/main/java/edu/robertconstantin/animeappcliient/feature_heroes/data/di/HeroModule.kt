@@ -9,7 +9,7 @@ import edu.robertconstantin.animeappcliient.feature_heroes.data.datasource.remot
 import edu.robertconstantin.animeappcliient.feature_heroes.data.datasource.remote.HeroRemoteDataSourceImpl
 import edu.robertconstantin.animeappcliient.feature_heroes.data.datasource.remote.IHeroRemoteDataSource
 import edu.robertconstantin.animeappcliient.feature_heroes.data.repository.HeroRepositoryImpl
-import edu.robertconstantin.animeappcliient.feature_heroes.domain.GetAllHeroesUseCase
+import edu.robertconstantin.animeappcliient.feature_heroes.domain.use_case.GetAllHeroesUseCase
 import edu.robertconstantin.animeappcliient.feature_heroes.domain.repository.IHeroRepository
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit

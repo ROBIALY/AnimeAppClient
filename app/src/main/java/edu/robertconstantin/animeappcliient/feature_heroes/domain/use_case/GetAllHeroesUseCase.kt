@@ -1,4 +1,4 @@
-package edu.robertconstantin.animeappcliient.feature_heroes.domain
+package edu.robertconstantin.animeappcliient.feature_heroes.domain.use_case
 
 import edu.robertconstantin.animeappcliient.core.util.Resource
 import edu.robertconstantin.animeappcliient.feature_heroes.domain.model.HeroDM

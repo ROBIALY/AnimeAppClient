@@ -8,8 +8,11 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import edu.robertconstantin.animeappcliient.core.presentation.UiEvent
 import edu.robertconstantin.animeappcliient.core.util.UiText
-import edu.robertconstantin.animeappcliient.feature_heroes.domain.GetAllHeroesUseCase
+import edu.robertconstantin.animeappcliient.feature_heroes.domain.use_case.GetAllHeroesUseCase
+import edu.robertconstantin.animeappcliient.feature_heroes.domain.use_case.InsertFavoriteHero
+import edu.robertconstantin.animeappcliient.feature_heroes.presentation.mapper.toHeroDM
 import edu.robertconstantin.animeappcliient.feature_heroes.presentation.mapper.toHeroVo
+import edu.robertconstantin.animeappcliient.feature_heroes.presentation.model.HeroVO
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
@@ -17,7 +20,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HeroFeedScreenViewModel
-@Inject constructor(private val getAllHeroesUseCase: GetAllHeroesUseCase) : ViewModel() {
+@Inject constructor(
+    private val getAllHeroesUseCase: GetAllHeroesUseCase,
+    private val insertFavoriteHero: InsertFavoriteHero
+    ) : ViewModel() {
 
 
     var state by mutableStateOf<HeroFeedScreenState>(HeroFeedScreenState())
@@ -29,6 +35,20 @@ class HeroFeedScreenViewModel
 
     init {
         getAllHeroes()
+    }
+
+    fun onEvent(event: HeroFeedScreenEvent) {
+        when(event) {
+            is HeroFeedScreenEvent.OnFavoriteClick -> {
+                saveHeroIntoFavorites(event.hero)
+            }
+        }
+    }
+
+    private fun saveHeroIntoFavorites(hero: HeroVO) {
+        viewModelScope.launch {
+            insertFavoriteHero.invoke(hero.toHeroDM())
+        }
     }
 
     private fun getAllHeroes() {
