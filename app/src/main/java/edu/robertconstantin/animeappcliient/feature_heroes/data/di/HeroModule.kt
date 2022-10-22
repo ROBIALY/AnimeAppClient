@@ -1,6 +1,7 @@
 package edu.robertconstantin.animeappcliient.feature_heroes.data.di
 
 import android.app.Application
+import androidx.annotation.ChecksSdkIntAtLeast
 import androidx.room.Room
 import dagger.Module
 import dagger.Provides
@@ -15,10 +16,8 @@ import edu.robertconstantin.animeappcliient.feature_heroes.data.datasource.remot
 import edu.robertconstantin.animeappcliient.feature_heroes.data.local_db.FavoriteHeroDatabase
 import edu.robertconstantin.animeappcliient.feature_heroes.data.repository.HeroRepositoryImpl
 import edu.robertconstantin.animeappcliient.feature_heroes.data.util.DataConst.FAVORITES_HERO_DB
-import edu.robertconstantin.animeappcliient.feature_heroes.domain.use_case.GetAllHeroesUseCase
 import edu.robertconstantin.animeappcliient.feature_heroes.domain.repository.IHeroRepository
-import edu.robertconstantin.animeappcliient.feature_heroes.domain.use_case.HeroUseCases
-import edu.robertconstantin.animeappcliient.feature_heroes.domain.use_case.ToogleFavoriteHeroUseCase
+import edu.robertconstantin.animeappcliient.feature_heroes.domain.use_case.*
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -72,8 +71,20 @@ object HeroModule {
     fun provideUseCase(repository: IHeroRepository): HeroUseCases {
         return HeroUseCases(
             getAllHeroesUseCase = GetAllHeroesUseCase(repository),
-            toogleFavoriteHeroUseCase = ToogleFavoriteHeroUseCase(repository)
+            toggleFavoriteHeroUseCase = ToogleFavoriteHeroUseCase(repository)
         )
+    }
+
+    @Provides
+    @Singleton
+    fun provideDeleteFavHeroUseCase(repository: IHeroRepository): DeleteFavoriteHeroUseCase {
+        return  DeleteFavoriteHeroUseCase(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetAllFavHeroUseCase(repository: IHeroRepository): GetAllFavoritesHeroesUseCase {
+        return  GetAllFavoritesHeroesUseCase(repository)
     }
 
 

@@ -8,6 +8,8 @@ import edu.robertconstantin.animeappcliient.feature_heroes.data.mapper.toFavHero
 import edu.robertconstantin.animeappcliient.feature_heroes.data.mapper.toHeroDM
 import edu.robertconstantin.animeappcliient.feature_heroes.domain.model.HeroDM
 import edu.robertconstantin.animeappcliient.feature_heroes.domain.repository.IHeroRepository
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class HeroRepositoryImpl @Inject constructor(
@@ -32,5 +34,11 @@ class HeroRepositoryImpl @Inject constructor(
 
     override suspend fun deleteFavoriteHero(heroDM: HeroDM): Int {
         return localHeroDataSource.deleteFavoriteHero(heroDM.toFavHeroEntity())
+    }
+
+    override fun getAllFavoritesHeroes(): Flow<List<HeroDM>> {
+        return localHeroDataSource.getAllFavoritesHeroes().map { heroes ->
+            heroes.map { hero -> hero.toHeroDM() }
+        }
     }
 }

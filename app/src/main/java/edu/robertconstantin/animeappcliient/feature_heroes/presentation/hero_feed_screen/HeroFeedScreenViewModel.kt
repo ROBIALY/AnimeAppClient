@@ -10,6 +10,7 @@ import edu.robertconstantin.animeappcliient.R
 import edu.robertconstantin.animeappcliient.core.presentation.UiEvent
 import edu.robertconstantin.animeappcliient.core.util.UiText
 import edu.robertconstantin.animeappcliient.feature_heroes.domain.use_case.HeroUseCases
+import edu.robertconstantin.animeappcliient.feature_heroes.presentation.common.HeroFeedScreenState
 import edu.robertconstantin.animeappcliient.feature_heroes.presentation.mapper.toHeroDM
 import edu.robertconstantin.animeappcliient.feature_heroes.presentation.mapper.toHeroVo
 import edu.robertconstantin.animeappcliient.feature_heroes.presentation.model.HeroVO
@@ -44,26 +45,6 @@ class HeroFeedScreenViewModel
         }
     }
 
-    private fun toggleFavoriteHero(hero: HeroVO) {
-        viewModelScope.launch {
-            useCases.toogleFavoriteHeroUseCase.invoke(hero.toHeroDM(), hero.isAddedToFavorites)
-
-            state = state.copy(heroes = state.heroes.map {
-                if (it.id == hero.id) it.copy(isAddedToFavorites = !it.isAddedToFavorites)
-                else it
-            })
-
-            when (hero.isAddedToFavorites) {
-                true -> _singleUiEvent.send(
-                    UiEvent.ShowSnackBar(UiText.StringResource(R.string.hero_deleted_from_fav))
-                )
-                false -> _singleUiEvent.send(
-                    UiEvent.ShowSnackBar(UiText.StringResource(R.string.hero_added_to_fav))
-                )
-            }
-        }
-    }
-
     private fun getAllHeroes() {
 
         viewModelScope.launch {
@@ -81,6 +62,26 @@ class HeroFeedScreenViewModel
                     _singleUiEvent.send(UiEvent.ShowSnackBar(msg ?: UiText.unknownError()))
                 }
             )
+        }
+    }
+
+    private fun toggleFavoriteHero(hero: HeroVO) {
+        viewModelScope.launch {
+            useCases.toggleFavoriteHeroUseCase.invoke(hero.toHeroDM(), hero.isAddedToFavorites)
+
+            state = state.copy(heroes = state.heroes.map {
+                if (it.id == hero.id) it.copy(isAddedToFavorites = !it.isAddedToFavorites)
+                else it
+            })
+
+            when (hero.isAddedToFavorites) {
+                true -> _singleUiEvent.send(
+                    UiEvent.ShowSnackBar(UiText.StringResource(R.string.hero_deleted_from_fav))
+                )
+                false -> _singleUiEvent.send(
+                    UiEvent.ShowSnackBar(UiText.StringResource(R.string.hero_added_to_fav))
+                )
+            }
         }
     }
 }

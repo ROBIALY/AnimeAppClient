@@ -1,4 +1,4 @@
-package edu.robertconstantin.animeappcliient.feature_heroes.presentation.hero_feed_screen
+package edu.robertconstantin.animeappcliient.feature_heroes.presentation.common
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,11 +13,12 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.ImageLoader
 import edu.robertconstantin.animeappcliient.core.presentation.UiEvent
-import edu.robertconstantin.animeappcliient.feature_heroes.presentation.common.HeroItem
+import edu.robertconstantin.animeappcliient.feature_heroes.presentation.hero_feed_screen.HeroFeedScreenEvent
+import edu.robertconstantin.animeappcliient.feature_heroes.presentation.hero_feed_screen.HeroFeedScreenViewModel
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
-fun HeroFeedScreen(
+fun HeroBaseScreen(
     imageLoader: ImageLoader,
     showUserInfo: (text: String) -> Unit = {},
     viewModel: HeroFeedScreenViewModel = hiltViewModel()
@@ -42,7 +43,7 @@ fun HeroFeedScreen(
         .padding(10.dp)) {
         LazyColumn {
             items(state.heroes) {
-                HeroItem(imageLoader = imageLoader, hero = it ,onHeroFavoriteClick = { hero ->
+                HeroItem(imageLoader = imageLoader, hero = it, onHeroFavoriteClick = { hero ->
                     viewModel.onEvent(HeroFeedScreenEvent.OnFavoriteClick(hero))
                 })
             }

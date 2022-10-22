@@ -23,6 +23,7 @@ import edu.robertconstantin.animeappcliient.core.presentation.navigation.screen.
 import edu.robertconstantin.animeappcliient.core.ui.theme.AnimeAppCliientTheme
 import edu.robertconstantin.animeappcliient.feature_heroes.presentation.hero_create_screen.HeroCreateScreen
 import edu.robertconstantin.animeappcliient.feature_heroes.presentation.hero_favorites_screen.HeroFavoritesScreen
+import edu.robertconstantin.animeappcliient.feature_heroes.presentation.common.HeroBaseScreen
 import edu.robertconstantin.animeappcliient.feature_heroes.presentation.hero_feed_screen.HeroFeedScreen
 import javax.inject.Inject
 
@@ -86,7 +87,11 @@ class MainActivity : ComponentActivity() {
                             }
 
                             composable(route = BottomMenuScreen.HeroFavoritesScreen.route) {
-                                HeroFavoritesScreen()
+                                HeroFavoritesScreen(imageLoader = imageLoader, showUserInfo = {
+                                    lifecycleScope.launchWhenStarted {
+                                        scaffoldState.snackbarHostState.showSnackbar(message = it)
+                                    }
+                                })
                             }
 
                             composable(route = BottomMenuScreen.HeroCreateScreen.route) {

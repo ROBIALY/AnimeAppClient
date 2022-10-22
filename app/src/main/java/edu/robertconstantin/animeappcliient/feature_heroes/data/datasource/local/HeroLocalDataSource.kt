@@ -2,6 +2,7 @@ package edu.robertconstantin.animeappcliient.feature_heroes.data.datasource.loca
 
 import edu.robertconstantin.animeappcliient.feature_heroes.data.local_db.FavoriteHeroDao
 import edu.robertconstantin.animeappcliient.feature_heroes.data.local_db.FavoriteHeroEntity
+import kotlinx.coroutines.flow.Flow
 
 class HeroLocalDataSource(private val dao: FavoriteHeroDao): IHeroLocalDataSource {
     override suspend fun insertFavoriteHero(favoriteHero: FavoriteHeroEntity) {
@@ -10,5 +11,9 @@ class HeroLocalDataSource(private val dao: FavoriteHeroDao): IHeroLocalDataSourc
 
     override suspend fun deleteFavoriteHero(favoriteHero: FavoriteHeroEntity): Int {
         return dao.deleteFavoriteHero(favoriteHero)
+    }
+
+    override fun getAllFavoritesHeroes(): Flow<List<FavoriteHeroEntity>> {
+        return dao.getAllFavoritesHeroes()
     }
 }

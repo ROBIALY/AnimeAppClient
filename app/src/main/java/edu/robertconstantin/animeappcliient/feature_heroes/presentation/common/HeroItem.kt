@@ -1,4 +1,4 @@
-package edu.robertconstantin.animeappcliient.feature_heroes.presentation.components
+package edu.robertconstantin.animeappcliient.feature_heroes.presentation.common
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -9,6 +9,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -31,7 +32,9 @@ import edu.robertconstantin.animeappcliient.feature_heroes.presentation.util.Pre
 fun HeroItem(
     imageLoader: ImageLoader,
     hero: HeroVO,
-    onHeroItemClick: (heroItem: HeroVO) -> Unit = {}
+    onHeroFavoriteClick: (heroItem: HeroVO) -> Unit = {},
+    onHeroDeleteClick: (heroItem: HeroVO) -> Unit = {},
+    isFromFavorites: Boolean = false
 ) {
 
     val dimens = LocalSpacing.current
@@ -55,19 +58,35 @@ fun HeroItem(
                 contentDescription = "Hero Item",
                 contentScale = ContentScale.Crop
             )
-            Image(
-                modifier = Modifier
-                    .align(Alignment.TopEnd)
-                    .padding(dimens.spaceSmall)
-                    .clickable {
-                        onHeroItemClick(hero)
-                    },
-                imageVector = Icons.Default.Favorite,
-                contentDescription = "Favorite icon",
-                colorFilter = if (hero.isAddedToFavorites)
-                    ColorFilter.tint(MaterialTheme.colorScheme.primary)
-                else ColorFilter.tint(Color.White)
-            )
+            if (!isFromFavorites){
+                Image(
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .padding(dimens.spaceSmall)
+                        .clickable {
+                            onHeroFavoriteClick(hero)
+                        },
+                    imageVector = Icons.Default.Favorite,
+                    contentDescription = "Favorite icon",
+                    colorFilter = if (hero.isAddedToFavorites)
+                        ColorFilter.tint(MaterialTheme.colorScheme.primary)
+                    else ColorFilter.tint(Color.White)
+                )
+            } else {
+                Image(
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .padding(dimens.spaceSmall)
+                        .clickable {
+                            onHeroDeleteClick(hero)
+                        },
+                    imageVector = Icons.Default.Delete,
+                    contentDescription = "Favorite icon",
+                    colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.primary)
+
+                )
+            }
+
         }
         //Surface 2 for description.
         Surface(

@@ -1,4 +1,4 @@
-package edu.robertconstantin.animeappcliient.feature_heroes.presentation.hero_feed_screen
+package edu.robertconstantin.animeappcliient.feature_heroes.presentation.common
 
 import edu.robertconstantin.animeappcliient.feature_heroes.presentation.model.HeroVO
 
