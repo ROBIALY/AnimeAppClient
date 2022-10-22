@@ -4,7 +4,7 @@ import androidx.compose.runtime.MutableState
 import edu.robertconstantin.animeappcliient.R
 import edu.robertconstantin.animeappcliient.core.presentation.UiEvent
 import edu.robertconstantin.animeappcliient.core.util.UiText
-import edu.robertconstantin.animeappcliient.feature_heroes.presentation.hero_feed_screen.HeroFeedScreenState
+import edu.robertconstantin.animeappcliient.feature_heroes.presentation.common.HeroFeedScreenState
 import edu.robertconstantin.animeappcliient.feature_heroes.presentation.model.HeroVO
 
 fun <T> HeroFeedScreenState.toggleHeroFavorites(hero: HeroVO, state: MutableState<T>): FavoritesToggler {

@@ -10,4 +10,6 @@ object CoreConstants {
 
     const val HERO_CREATE_SCREEN = "hero_create_screen"
     const val HERO_CREATE_TITLE = "Create Hero"
+
+    const val EDIT_FAVORITE_HERO_SCREEN = "edit_favorite_hero_screen"
 }
