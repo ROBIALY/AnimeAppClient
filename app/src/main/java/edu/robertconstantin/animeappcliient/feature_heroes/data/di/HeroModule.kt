@@ -1,16 +1,24 @@
 package edu.robertconstantin.animeappcliient.feature_heroes.data.di
 
+import android.app.Application
+import androidx.room.Room
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import edu.robertconstantin.animeappcliient.feature_heroes.data.datasource.local.HeroLocalDataSource
+import edu.robertconstantin.animeappcliient.feature_heroes.data.datasource.local.IHeroLocalDataSource
 import edu.robertconstantin.animeappcliient.feature_heroes.data.datasource.remote.HeroApi
 import edu.robertconstantin.animeappcliient.feature_heroes.data.datasource.remote.HeroApi.Companion.HERO_BASE_URL
 import edu.robertconstantin.animeappcliient.feature_heroes.data.datasource.remote.HeroRemoteDataSourceImpl
 import edu.robertconstantin.animeappcliient.feature_heroes.data.datasource.remote.IHeroRemoteDataSource
+import edu.robertconstantin.animeappcliient.feature_heroes.data.local_db.FavoriteHeroDatabase
 import edu.robertconstantin.animeappcliient.feature_heroes.data.repository.HeroRepositoryImpl
-import edu.robertconstantin.animeappcliient.feature_heroes.domain.GetAllHeroesUseCase
+import edu.robertconstantin.animeappcliient.feature_heroes.data.util.DataConst.FAVORITES_HERO_DB
+import edu.robertconstantin.animeappcliient.feature_heroes.domain.use_case.GetAllHeroesUseCase
 import edu.robertconstantin.animeappcliient.feature_heroes.domain.repository.IHeroRepository
+import edu.robertconstantin.animeappcliient.feature_heroes.domain.use_case.HeroUseCases
+import edu.robertconstantin.animeappcliient.feature_heroes.domain.use_case.ToogleFavoriteHeroUseCase
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -33,20 +41,41 @@ object HeroModule {
 
     @Provides
     @Singleton
+    fun providesHeroDatabase(app: Application): FavoriteHeroDatabase {
+        return Room.databaseBuilder(
+            app,
+            FavoriteHeroDatabase::class.java,
+            FAVORITES_HERO_DB
+        ).build()
+    }
+
+
+    @Provides
+    @Singleton
     fun provideHeroRemoteDataSource(api: HeroApi): IHeroRemoteDataSource {
         return HeroRemoteDataSourceImpl(api)
     }
 
     @Provides
-    @Singleton
-    fun provideRepository(remote: IHeroRemoteDataSource): IHeroRepository {
-        return HeroRepositoryImpl(remote)
+    @Singleton fun provideHeroLocalDataSource(local: FavoriteHeroDatabase): IHeroLocalDataSource {
+        return HeroLocalDataSource(local.dao)
     }
 
     @Provides
     @Singleton
-    fun provideUseCase(repository: IHeroRepository): GetAllHeroesUseCase {
-        return GetAllHeroesUseCase(repository)
+    fun provideRepository(remote: IHeroRemoteDataSource, local: IHeroLocalDataSource): IHeroRepository {
+        return HeroRepositoryImpl(remote, local)
     }
+
+    @Provides
+    @Singleton
+    fun provideUseCase(repository: IHeroRepository): HeroUseCases {
+        return HeroUseCases(
+            getAllHeroesUseCase = GetAllHeroesUseCase(repository),
+            toogleFavoriteHeroUseCase = ToogleFavoriteHeroUseCase(repository)
+        )
+    }
+
+
 
 }

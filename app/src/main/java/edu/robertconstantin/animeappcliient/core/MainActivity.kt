@@ -3,19 +3,15 @@ package edu.robertconstantin.animeappcliient.core
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.rememberScaffoldState
-import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -57,8 +53,9 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     //Nuestro andamio que conformara la pantalla general,  tendra una serie de elementos.
-                    Scaffold(
+                    androidx.compose.material.Scaffold(
                         modifier = Modifier.fillMaxSize(),
+                        scaffoldState = scaffoldState,
                         bottomBar = {
                             BottomNavMenu(
                                 navController = navController,
@@ -76,23 +73,16 @@ class MainActivity : ComponentActivity() {
 
                         }
                     ) {
-//                        Column(modifier = Modifier
-//                            .fillMaxSize()
-//                            .padding(bottom = 50.dp)
-//                            .verticalScroll(rememberScrollState())) {
-//
-////                            Text("Bottom app bar padding:  $paddingValues")
-////
-////                            repeat(50) {
-////                                Text(it.toString())
-////                            }
-//                        }
                         NavHost(
                             navController = navController,
                             startDestination = BottomMenuScreen.HeroFeedScreen.route) {
 
                             composable(route = BottomMenuScreen.HeroFeedScreen.route) {
-                                HeroFeedScreen(imageLoader = imageLoader)
+                                HeroFeedScreen(imageLoader = imageLoader, showUserInfo = {
+                                    lifecycleScope.launchWhenStarted {
+                                        scaffoldState.snackbarHostState.showSnackbar(message = it)
+                                    }
+                                })
                             }
 
                             composable(route = BottomMenuScreen.HeroFavoritesScreen.route) {

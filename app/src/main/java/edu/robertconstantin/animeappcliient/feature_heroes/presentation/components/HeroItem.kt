@@ -31,7 +31,7 @@ import edu.robertconstantin.animeappcliient.feature_heroes.presentation.util.Pre
 fun HeroItem(
     imageLoader: ImageLoader,
     hero: HeroVO,
-    onHeroItemClick: (heroItem: HeroVO) -> Unit
+    onHeroItemClick: (heroItem: HeroVO) -> Unit = {}
 ) {
 
     val dimens = LocalSpacing.current
@@ -48,15 +48,25 @@ fun HeroItem(
         Surface(shape = RoundedCornerShape(size = dimens.spaceSmall)) {
             Image(
                 modifier = Modifier.fillMaxSize(),
-                painter = rememberAsyncImagePainter(model = BASE_IMAGE_URL.plus(hero.image), imageLoader = imageLoader),
+                painter = rememberAsyncImagePainter(
+                    model = BASE_IMAGE_URL.plus(hero.image),
+                    imageLoader = imageLoader
+                ),
                 contentDescription = "Hero Item",
                 contentScale = ContentScale.Crop
             )
             Image(
-                modifier = Modifier.align(Alignment.TopEnd).padding(dimens.spaceSmall),
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .padding(dimens.spaceSmall)
+                    .clickable {
+                        onHeroItemClick(hero)
+                    },
                 imageVector = Icons.Default.Favorite,
                 contentDescription = "Favorite icon",
-                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.primary)
+                colorFilter = if (hero.isAddedToFavorites)
+                    ColorFilter.tint(MaterialTheme.colorScheme.primary)
+                else ColorFilter.tint(Color.White)
             )
         }
         //Surface 2 for description.
@@ -64,7 +74,7 @@ fun HeroItem(
             modifier = Modifier
                 .fillMaxHeight(0.4f)
                 .fillMaxWidth(),
-            color =  MaterialTheme.colorScheme.onSurface.copy(alpha = ContentAlpha.medium),
+            color = MaterialTheme.colorScheme.onSurface.copy(alpha = ContentAlpha.medium),
             shape = RoundedCornerShape(
                 bottomStart = dimens.spaceSmall,
                 bottomEnd = dimens.spaceSmall
@@ -95,7 +105,8 @@ fun HeroItem(
                     modifier = Modifier.padding(top = dimens.spaceSmall),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(text = "(${hero.rating})",
+                    Text(
+                        text = "(${hero.rating})",
                         textAlign = TextAlign.Center,
                         color = Color.White.copy(alpha = ContentAlpha.medium)
                     )
