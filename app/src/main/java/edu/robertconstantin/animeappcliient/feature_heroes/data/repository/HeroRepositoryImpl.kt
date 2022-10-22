@@ -29,4 +29,8 @@ class HeroRepositoryImpl @Inject constructor(
     override suspend fun insertFavoriteHero(heroDM: HeroDM) {
         localHeroDataSource.insertFavoriteHero(heroDM.toFavHeroEntity())
     }
+
+    override suspend fun deleteFavoriteHero(heroDM: HeroDM): Int {
+        return localHeroDataSource.deleteFavoriteHero(heroDM.toFavHeroEntity())
+    }
 }

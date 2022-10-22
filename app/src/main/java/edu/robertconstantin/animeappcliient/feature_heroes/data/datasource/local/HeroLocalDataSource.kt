@@ -7,4 +7,8 @@ class HeroLocalDataSource(private val dao: FavoriteHeroDao): IHeroLocalDataSourc
     override suspend fun insertFavoriteHero(favoriteHero: FavoriteHeroEntity) {
         dao.insertFavoriteHero(favoriteHero)
     }
+
+    override suspend fun deleteFavoriteHero(favoriteHero: FavoriteHeroEntity): Int {
+        return dao.deleteFavoriteHero(favoriteHero)
+    }
 }

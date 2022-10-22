@@ -12,5 +12,6 @@ data class HeroVO(
     val power: Int,
     //month of born
     val month: String,
-    val day: String
+    val day: String,
+    val isAddedToFavorites: Boolean = false
 )

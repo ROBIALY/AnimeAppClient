@@ -4,4 +4,5 @@ import edu.robertconstantin.animeappcliient.feature_heroes.data.local_db.Favorit
 
 interface IHeroLocalDataSource {
     suspend fun insertFavoriteHero(favoriteHero: FavoriteHeroEntity)
+    suspend fun deleteFavoriteHero(favoriteHero: FavoriteHeroEntity): Int
 }
