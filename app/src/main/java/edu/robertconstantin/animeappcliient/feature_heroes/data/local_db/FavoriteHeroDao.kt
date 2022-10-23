@@ -17,4 +17,10 @@ interface FavoriteHeroDao {
 
     @Query("SELECT * FROM favorites_hero_db")
     fun getAllFavoritesHeroes(): Flow<List<FavoriteHeroEntity>>
+
+    @Query("UPDATE favorites_hero_db SET name = :name, about = :about, power = :power WHERE id = :id")
+    suspend fun updateFavoriteHero(name: String, about: String, power: String, id: Int)
+
+    @Query("SELECT * FROM favorites_hero_db WHERE id = :id")
+    fun getHeroById(id: Int): Flow<FavoriteHeroEntity>
 }

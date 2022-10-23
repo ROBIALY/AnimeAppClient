@@ -16,4 +16,18 @@ class HeroLocalDataSource(private val dao: FavoriteHeroDao): IHeroLocalDataSourc
     override fun getAllFavoritesHeroes(): Flow<List<FavoriteHeroEntity>> {
         return dao.getAllFavoritesHeroes()
     }
+
+    override fun getHeroById(heroId: Int): Flow<FavoriteHeroEntity> {
+        return dao.getHeroById(heroId)
+    }
+
+    override suspend fun updateFavoriteHero(
+        name: String,
+        about: String,
+        power: String,
+        id: Int
+    ) {
+        dao.updateFavoriteHero(name, about, power, id)
+    }
+
 }

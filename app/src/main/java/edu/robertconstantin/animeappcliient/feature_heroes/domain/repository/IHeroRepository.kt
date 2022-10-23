@@ -10,4 +10,10 @@ interface IHeroRepository {
     suspend fun deleteFavoriteHero(heroDM: HeroDM): Int
 
     fun getAllFavoritesHeroes(): Flow<List<HeroDM>>
+
+    fun getHeroById(heroId: Int): Flow<HeroDM>
+
+    suspend fun updateFavoriteHero(name: String, about: String, power: String, id: Int)
+
+
 }

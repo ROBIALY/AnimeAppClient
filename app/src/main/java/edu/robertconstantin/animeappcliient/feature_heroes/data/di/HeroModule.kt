@@ -1,7 +1,6 @@
 package edu.robertconstantin.animeappcliient.feature_heroes.data.di
 
 import android.app.Application
-import androidx.annotation.ChecksSdkIntAtLeast
 import androidx.room.Room
 import dagger.Module
 import dagger.Provides
@@ -66,6 +65,8 @@ object HeroModule {
         return HeroRepositoryImpl(remote, local)
     }
 
+    // TODO: PROVIDE IN A SEPARATE MODULE AT DOMAIN LEVEL
+
     @Provides
     @Singleton
     fun provideUseCase(repository: IHeroRepository): HeroUseCases {
@@ -85,6 +86,18 @@ object HeroModule {
     @Singleton
     fun provideGetAllFavHeroUseCase(repository: IHeroRepository): GetAllFavoritesHeroesUseCase {
         return  GetAllFavoritesHeroesUseCase(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideUpdateFavHeroUseCase(repository: IHeroRepository): UpdateFavHeroUseCase {
+        return  UpdateFavHeroUseCase(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun getFavHeroByIdUseCase(repository: IHeroRepository): GetFavHeroByIdUseCase {
+        return  GetFavHeroByIdUseCase(repository)
     }
 
 

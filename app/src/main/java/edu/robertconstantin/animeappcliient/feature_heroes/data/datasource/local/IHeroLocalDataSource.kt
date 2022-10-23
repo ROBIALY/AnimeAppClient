@@ -10,4 +10,9 @@ interface IHeroLocalDataSource {
     suspend fun deleteFavoriteHero(favoriteHero: FavoriteHeroEntity): Int
     fun getAllFavoritesHeroes(): Flow<List<FavoriteHeroEntity>>
 
+    fun getHeroById(heroId: Int): Flow<FavoriteHeroEntity>
+
+    suspend fun updateFavoriteHero(name: String, about: String, power: String, id: Int)
+
+
 }

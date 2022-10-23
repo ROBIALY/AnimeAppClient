@@ -34,6 +34,7 @@ fun HeroItem(
     hero: HeroVO,
     onHeroFavoriteClick: (heroItem: HeroVO) -> Unit = {},
     onHeroDeleteClick: (heroItem: HeroVO) -> Unit = {},
+    onNavigateToDetails: (heroId: Int) -> Unit = {},
     isFromFavorites: Boolean = false
 ) {
 
@@ -43,7 +44,7 @@ fun HeroItem(
             .height(HERO_ITEM_HEIGHT.dp)
             .padding(dimens.spaceSmall)
             .clickable {
-
+                onNavigateToDetails(hero.id)
             },
         contentAlignment = Alignment.BottomStart
     ) {

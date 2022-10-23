@@ -21,6 +21,7 @@ import kotlinx.coroutines.flow.collectLatest
 fun HeroFavoritesScreen(
     imageLoader: ImageLoader,
     showUserInfo: (text: String) -> Unit = {},
+    onNavigateTo: (heroId: Int) -> Unit = {},
     viewModel: HeroFavoritesScreenViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
@@ -28,7 +29,7 @@ fun HeroFavoritesScreen(
 
     LaunchedEffect(key1 = true) {
         viewModel.singleUiEvent.collectLatest { uiEvent ->
-            when(uiEvent) {
+            when (uiEvent) {
                 is UiEvent.ShowSnackBar -> {
                     showUserInfo(uiEvent.message.asString(context))
                 }
@@ -37,14 +38,24 @@ fun HeroFavoritesScreen(
         }
     }
 
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .padding(10.dp)) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(10.dp)
+    ) {
         LazyColumn {
             items(state.heroes) {
-                HeroItem(imageLoader = imageLoader, hero = it, isFromFavorites = true , onHeroDeleteClick = { hero ->
-                    viewModel.onEvent(HeroFavoritesScreenEvent.OnDeleteClick(hero))
-                })
+                HeroItem(
+                    imageLoader = imageLoader,
+                    hero = it,
+                    isFromFavorites = true,
+                    onHeroDeleteClick = { hero ->
+                        viewModel.onEvent(HeroFavoritesScreenEvent.OnDeleteClick(hero))
+                    },
+                    onNavigateToDetails = { heroId ->
+                        onNavigateTo(heroId)
+                    }
+                )
             }
         }
     }

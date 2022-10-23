@@ -41,4 +41,18 @@ class HeroRepositoryImpl @Inject constructor(
             heroes.map { hero -> hero.toHeroDM() }
         }
     }
+
+    override fun getHeroById(heroId: Int): Flow<HeroDM> {
+        return localHeroDataSource.getHeroById(heroId).map { it.toHeroDM() }
+    }
+
+    override suspend fun updateFavoriteHero(
+        name: String,
+        about: String,
+        power: String,
+        id: Int
+    ) {
+        localHeroDataSource.updateFavoriteHero(name, about, power, id)
+    }
+
 }

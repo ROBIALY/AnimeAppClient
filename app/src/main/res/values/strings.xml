@@ -3,4 +3,10 @@
     <string name="error_unknown">Unknown Error!</string>
     <string name="hero_added_to_fav">Hero has been added to favorites!</string>
     <string name="hero_deleted_from_fav">Hero has been deleted from favorites!</string>
+    <string name="fav_hero_updated">Favorite hero has been updated!</string>
+    <string name="all_fields_needed">Complete all fields before update!</string>
+    <string name="icon_text_field">Icon text</string>
+    <string name="hero_name">New hero name...</string>
+    <string name="hero_description">New hero about...</string>
+    <string name="hero_power">New hero power...</string>
 </resources>
